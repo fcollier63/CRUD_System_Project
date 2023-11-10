@@ -1,0 +1,132 @@
+﻿
+<template id="read-template">
+    <div class="container">
+        <h1 class="mt-5">List of Companies, Addresses, and Countries</h1>
+
+        <ul class="nav nav-tabs mt-4">
+            <li class="nav-item">
+                <a class="nav-link custom-tab" :class="{ active: currentTab === 'Company' }" v-on:click="showData('Company')">
+                    Companies
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link custom-tab" :class="{ active: currentTab === 'Address' }" v-on:click="showData('Address')">
+                    Addresses
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link custom-tab" :class="{ active: currentTab === 'Country' }" v-on:click="showData('Country')">
+                    Countries
+                </a>
+            </li>
+            <li class="col-sm-3"><input class="form-control ml-4" type="text" v-model="searchKeyword" placeholder="Search..."> </li>
+
+        </ul>
+
+
+
+        <div class="table-content">
+            <div class="tab-content custom-table">
+                <div class="tab-pane" :class="{ active: currentTab === 'Company' }" id="companies">
+                    <!-- Table for Companies -->
+                    <table class="table table-hover" id="companyTable">
+                        <thead class="fixed-table-head">
+                            <tr>
+                                <th>Company ID</th>
+                                <th>Company Name</th>
+                                <th>Phone Number</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="company in displayedItems" :key="company.companyId">
+                                <!-- Display filtered company data -->
+
+                                <td>{{ company.companyId }}</td>
+                                <td>{{ company.companyName }}</td>
+                                <td>{{ company.phoneNumber }}</td>
+                                <td class="center-action">
+                                    <router-link :to="'/Update/Company/' + company.companyId" tag="button" class="btn btn-warning btn-block">Edit</router-link>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" :class="{ active: currentTab === 'Address' }" id="addresses">
+                    <!-- Table for Addresses -->
+                    <table class="table table-hover">
+                        <thead class="fixed-table-head">
+                            <tr>
+                                <th>Address Id</th>
+                                <th>Company Name</th>
+                                <th>Street Address 1</th>
+                                <th>Street Address 2</th>
+                                <th>Region</th>
+                                <th>PostCode</th>
+                                <th>Country</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="address in displayedItems" :key="address.addressId">
+                                <td>{{ address.addressId }}</td>
+                                <td>{{ getCompanyNameForAddress(address) }}</td>
+                                <td>{{ address.streetAddress1 }}</td>
+                                <td>{{ address.streetAddress2 }}</td>
+                                <td>{{ address.region }}</td>
+                                <td>{{ address.postCode }}</td>
+                                <td>{{ getCountryForAddress(address) }}</td>
+                                <td class="center-action">
+                                    <router-link :to="'/Update/Address/' + address.addressId" tag="button" class="btn btn-warning btn-block">Edit</router-link>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" :class="{ active: currentTab === 'Country' }" id="countries">
+                    <!-- Table for Countries -->
+                    <table class="table table-hover">
+                        <thead class="fixed-table-head">
+                            <tr>
+                                <th>Country ID</th>
+                                <th>Country Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="country in displayedItems" :key="country.countryId">
+
+                                <td>{{ country.countryId }}</td>
+                                <td>{{ country.countryName }}</td>
+                                <td class="center-action">
+                                    @*<router-link :to="'/Update/Country/' + country.countryId" tag="button" class="btn btn-warning btn-block">Edit</router-link>*@
+                                    <router-link :to="'/Update/Country/' + country.countryId" class="btn btn-warning btn-block">Edit</router-link>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <router-link :to="{ name: 'create', query: { tab: currentTab } }" tag="button" class="btn btn-success mr-2">Add</router-link>
+                <router-link to="/List" tag="button" class="btn btn-info">Search</router-link>
+            </div>
+            @*<router-link to="/Create" tag="button" class="btn btn-success">Add</router-link>*@
+
+            <div class="col-5">
+            </div>
+            <div class="col-3">
+                <button class="btn btn-secondary" v-on:click="paging('prev')">Previous</button>
+                {{ currentPageNumbers[currentTab.toLowerCase() + 'PageNumber'] }} / {{ totalPages }}
+                <button class="btn btn-secondary" v-on:click="paging('next')">Next</button>
+
+            </div>
+            @*<button class="btn btn-danger" v-on:click="setPage(currentPageNumber)">pageData</button>*@
+        </div>
+        <div class="item-count">
+            <p>Item Count: {{ itemCountComputed }}</p>
+        </div>
+    </div>
+</template>

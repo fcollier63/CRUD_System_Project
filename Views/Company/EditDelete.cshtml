@@ -1,0 +1,175 @@
+﻿@model crudSystemProject.Models.Company
+<template id="EditDelete-template">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mt-3">Edit or Delete {{ pageTitle }}</h1>
+            </div>
+        </div>
+        <div v-if="EntityType === 'Address'">
+            <h2>ID: {{ Id }}</h2>
+            <form>
+                <attribute-input-form label="Street Address 1:" variable="streetAddress1" :placeholder="pageData.Address.streetAddress1" v-model="formData.Address.streetAddress1"></attribute-input-form>
+                <attribute-input-form label="Street Address 2:" variable="streetAddress2" :placeholder="pageData.Address.streetAddress2" v-model="formData.Address.streetAddress2"></attribute-input-form>
+                <attribute-input-form label="Postcode:" variable="postCode" :placeholder="pageData.Address.postCode" v-model="formData.Address.postCode"></attribute-input-form>
+                <attribute-input-form label="Region:" variable="region" :placeholder="pageData.Address.region" v-model="formData.Address.region"></attribute-input-form>
+                <attribute-input-form label="Country ID:" variable="countryId" :placeholder="pageData.Address.countryId" v-model="formData.Address.countryId"></attribute-input-form>
+                <attribute-input-form label="Company ID:" variable="companyId" :placeholder="pageData.Address.companyId" v-model="formData.Address.companyId"></attribute-input-form>
+                <div class="form-group">
+                    <button type="button" v-on:click="handleUpdate(EntityType)" class="btn btn-success">Confirm Edit</button>
+                    <button type="button" v-on:click="pathReturn()" tag="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" v-on:click="openDeleteModal()" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+
+        <div v-else-if="EntityType === 'Company'">
+            <h2>ID: {{ Id }}</h2>
+            <form>
+                <attribute-input-form label="Company Name:" variable="companyName" :placeholder="pageData.Company.companyName" v-model="formData.Company.companyName"></attribute-input-form>
+                <attribute-input-form label="Phone Number:" variable="phoneNumber" :placeholder="pageData.Company.phoneNumber" v-model="formData.Company.phoneNumber"></attribute-input-form>
+                <div class="form-group">
+                    <button type="button" v-on:click="handleUpdate(EntityType)" class="btn btn-success">Confirm Edit</button>
+                    <button type="button" v-on:click="pathReturn()" tag="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" v-on:click="openDeleteModal()" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+
+        <div v-else-if="EntityType === 'Country'">
+            <h2>ID: {{ Id }}</h2>
+            <form>
+                <attribute-input-form label="Country Name:" variable="countryName" :placeholder="pageData.Country.countryName" v-model="formData.Country.countryName"></attribute-input-form>
+                <div class="form-group">
+                    <button type="button" v-on:click="handleUpdate(EntityType)" class="btn btn-success">Confirm Edit</button>
+                    <button type="button" v-on:click="pathReturn()" tag="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" v-on:click="openDeleteModal()" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+
+        @*<div v-if="EntityType === 'Address'">
+            <h2>ID: {{ Id }}</h2>
+            <form>
+
+            @*<label for="streetAddress1">Street Address 1:</label>
+            <input v-model="formData.Address.streetAddress1" type="text" :placeholder="pageData.Address.streetAddress1" class="form-control">
+
+            <attribute-input-form label="Street Address 1:" :variable="streetAddress1" :placeholder="pageData.Address.streetAddress1" v-model="formData.Address.streetAddress1"></attribute-input-form>
+
+
+
+            <div class="form-group">
+            <label for="streetAddress2">Street Address 2:</label>
+            <input v-model="formData.Address.streetAddress2" type="text" :placeholder="pageData.Address.streetAddress2" class="form-control">
+            </div>
+            <div class="form-group">
+            <label for="postCode">Postcode:</label>
+            <input v-model="formData.Address.postCode" type="text" :placeholder="pageData.Address.postCode" class="form-control">
+            </div>
+            <div class="form-group">
+            <label for="region">Region:</label>
+            <input v-model="formData.Address.region" type="text" :placeholder="pageData.Address.region" class="form-control">
+            </div>
+            <div class="form-group">
+            <label for="countryId">Country ID:</label>
+            <input v-model="formData.Address.countryId" type="text" :placeholder="pageData.Address.countryId" class="form-control">
+            </div>
+            <div class="form-group">
+            <label for="companyId">Company ID:</label>
+            <input v-model="formData.Address.companyId" type="text" :placeholder="pageData.Address.companyId" class="form-control">
+            </div>
+            <div class="form-group">
+            <button type="button" v-on:click="handleUpdate(EntityType)" class="btn btn-success">Confirm Edit</button>
+            <button type="button" v-on:click="pathReturn()" tag="button" class="btn btn-secondary">Cancel</button>
+
+            <button type="button" v-on:click="openDeleteModal()" class="btn btn-danger">Delete</button>
+            </div>
+            </form>
+            </div>
+
+            <div v-else-if="EntityType === 'Company'">
+            <h2>ID: {{ Id }}</h2>
+            <form>
+            <div class="form-group">
+            <label for="companyName">Company Name:</label>
+            <input v-model="formData.Company.companyName" type="text" :placeholder="pageData.Company.companyName" class="form-control">
+            </div>
+            <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input v-model="formData.Company.phoneNumber" type="text" :placeholder="pageData.Company.phoneNumber" class="form-control">
+            </div>
+            <div class="form-group">
+            <button type="button" v-on:click="handleUpdate(EntityType)" class="btn btn-success">Confirm Edit</button>
+            <button type="button" v-on:click="pathReturn()" tag="button" class="btn btn-secondary">Cancel</button>
+            <router-link to="/Read" tag="button" class="btn btn-secondary mt-0">Cancel</router-link>
+
+            <button type="button" v-on:click="openDeleteModal()" class="btn btn-danger">Delete</button>
+            </div>
+            </form>
+            </div>
+
+            <div v-else-if="EntityType === 'Country'">
+            <h2>ID: {{ Id }}</h2>
+            <form>
+
+            <attribute-input-form label="Country Name:" :variable="countryName" :placeholder="pageData.Country.countryName" v-model="formData.Country.countryName"></attribute-input-form>
+
+            <div class="form-group">
+            <button type="button" v-on:click="handleUpdate(EntityType)" class="btn btn-success">Confirm Edit</button>
+            <button type="button" v-on:click="pathReturn()" tag="button" class="btn btn-secondary">Cancel</button>
+            <router-link to="/Read" tag="button" class="btn btn-secondary mt-0">Cancel</router-link>
+
+            <button type="button" v-on:click="openDeleteModal()" class="btn btn-danger">Delete</button>
+            </div>
+            </form>
+            </div>*@
+
+        <div class="modal" v-if="isDeleteModalOpen">
+            <div class="modal-content">
+                <span class="close" v-on:click="closeDeleteModal">&times;</span>
+                <h2>Delete {{ EntityType }}</h2>
+                <div class="form-group">
+                    <button type="button" v-on:click="handleDelete(EntityType)" class="btn btn-danger">Confirm Delete</button>
+                    <button type="button" v-on:click="closeDeleteModal" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 50%
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+</style>

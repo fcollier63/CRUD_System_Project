@@ -1,0 +1,352 @@
+﻿<template id="list-template">
+    <div id="app" class="container">
+       
+        <div class="search-options mt-6">
+            <button v-on:click="showCompanyInputs()" class="btn btn-primary mr-2">Show Company</button>
+            <button v-on:click="showAddressInputs()" class="btn btn-primary mr-2">Show Address</button>
+            <button v-on:click="showCountryInputs()" class="btn btn-primary">Show Country</button>
+            <router-link to="/Read" tag="button" class="btn btn-secondary">Go back to data</router-link>
+        </div>
+
+        <!-- Company Search -->
+        <div v-if="showingCompanies" class="search-section mb-2">
+            <h2 class="mt-2">Search Company</h2>
+            <div class="input-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="companyName">Company Name:</label>
+                            <input type="text" id="companyName" v-model="companyCriteria.companyName" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="text" id="phoneNumber" v-model="companyCriteria.phoneNumber" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button v-on:click="searchCompany()" class="btn btn-success">Search Company</button>
+            </div>
+        </div>
+
+
+        <!-- Address Search -->
+        <div v-else-if="showingAddresses" class="search-section mb-2">
+            <h2 class="mt-2">Search Address</h2>
+            
+                <div class="row">
+                    <div class="col-sm-3">
+                        <!-- Address inputs - Column 1 -->
+                        <div class="form-group">
+                            <label for="streetAddress1">Street Address 1:</label>
+                            <input type="text" id="streetAddress1" v-model="addressCriteria.streetAddress1" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyId">Company Id:</label>
+                            <input type="text" id="companyId" v-model="addressCriteria.companyId" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="countryId">Country Id:</label>
+                            <input type="text" id="countryId" v-model="addressCriteria.countryId" class="form-control" required>
+                        </div>
+                        
+                            
+                    </div>
+
+                    <div class="col-sm-3">
+                        <!-- Address inputs - Column 2 -->
+                        <div class="form-group">
+                            <label for="streetAddress2">Street Address 2:</label>
+                            <input type="text" id="streetAddress2" v-model="addressCriteria.streetAddress2" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="companyName">Company Name:</label>
+                            <input type="text" id="companyName" v-model="addressCriteria.Company.companyName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="countryName">Country Name:</label>
+                            <input type="text" id="countryName" v-model="addressCriteria.Country.countryName" class="form-control" required>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-sm-3">
+                        <!-- Address inputs - Column 3 -->
+                        <div class="form-group">
+                            <label for="postCode">PostCode:</label>
+                            <input type="text" id="postCode" v-model="addressCriteria.postCode" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="text" id="phoneNumber" v-model="addressCriteria.Company.phoneNumber" class="form-control" required>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="col-sm-3">
+                        <!-- Address inputs - Column 4 -->
+                        <div class="form-group">
+                            <label for="region">Region:</label>
+                            <input type="text" id="region" v-model="addressCriteria.region" class="form-control">
+                        </div>
+                        
+                    </div>
+                </div>
+         
+            <div class="button-group">
+                <button v-on:click="searchAddress()" class="btn btn-success">Search Address</button>
+            </div>
+        </div>
+
+
+        <div v-else-if="showingCountries" class="search-section mb-2">
+            <h2 class="mt-2">Search Country</h2>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="countryName">Country Name:</label>
+                    <input type="text" id="countryName" v-model="countryCriteria.countryName" class="form-control" required>
+                </div>
+                <div class="button-group">
+                    <button v-on:click="searchCountry()" class="btn btn-success">Search Country</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Results -->
+        <div id="search-results" class="search-results mt-3">
+            <h2 v-if="showingCompanies || showingAddresses || showingCountries">Search Results</h2>
+            <table class="table table-content table-hover custom-table">
+                <thead class="fixed-table-head">
+                    <tr>
+                        <!-- Use the extracted column names as table headers -->
+                        <th v-for="(columnName, index) in extractColumnNames(searchResults)" :key="index">
+                            {{ columnName }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(result, rowIndex) in searchResults" :key="rowIndex">
+                        <td v-for="(column, index) in result" :key="index">
+                            {{ column }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
+
+
+
+@*
+    <template id="list-template">
+
+    <div id="app">
+    <h1>Search Page</h1>
+    <button v-on:click="showCompanyInputs()">Search Company</button>
+    <button v-on:click="showAddressInputs()">Search Address</button>
+    <button v-on:click="showCountryInputs()">Search Country</button>
+    <router-link to="/Read" tag="button">Go back to data</router-link>
+
+    <div v-if="showingCompanies">
+    <!-- Company inputs -->
+    <label for="companyName">Company Name:</label>
+    <input type="text" id="companyName" v-model="companyCriteria.companyName" required>
+    <br>
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" v-model="companyCriteria.phoneNumber" required>
+    <br>
+    <button v-on:click="searchCompany()" aria-label="Add">Search Company</button>
+    </div>
+
+    <div v-else-if="showingAddresses">
+    <div class="input-column">
+    <!-- Address inputs - Column 1 -->
+    <label for="streetAddress1">Street Address 1:</label>
+    <input type="text" id="streetAddress1" v-model="addressCriteria.streetAddress1" required>
+    <br>
+    <label for="streetAddress2">Street Address 2:</label>
+    <input type="text" id="streetAddress2" v-model="addressCriteria.streetAddress2" required>
+    <br>
+    <label for="region">Region:</label>
+    <input type="text" id="region" v-model="addressCriteria.region">
+    <br>
+    <label for="postCode">PostCode:</label>
+    <input type="text" id="postCode" v-model="addressCriteria.postCode" required>
+    </div>
+
+    <div class="input-column">
+    <!-- Address inputs - Column 2 -->
+    <label for="companyId">Company Id:</label>
+    <input type="text" id="companyId" v-model="addressCriteria.companyId" required>
+    <br>
+    <label for="companyName">Company Name:</label>
+    <input type="text" id="companyName" v-model="addressCriteria.Company.companyName" required>
+    <br />
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" v-model="addressCriteria.Company.phoneNumber" required>
+    </div>
+
+    <div class="input-column">
+    <!-- Address inputs - Column 3 -->
+    <label for="countryId">Country Id:</label>
+    <input type="text" id="countryId" v-model="addressCriteria.countryId" required>
+    <br>
+    <label for="countryName">Country Name:</label>
+    <input type="text" id="countryName" v-model="addressCriteria.Country.countryName" required>
+    </div>
+    <button v-on:click="searchAddress()" aria-label="Add">Search Address</button>
+    </div>
+
+
+
+
+    <div v-else-if="showingCountries">
+    <!-- Country inputs -->
+    <label for="countryName">Country Name:</label>
+    <input type="text" id="countryName" v-model="countryCriteria.countryName" required>
+    <br />
+    <button v-on:click="searchCountry()" aria-label="Add">Search Country</button>
+    </div>
+
+
+    <div id="search-results">
+    <h2>Search Results</h2>
+    <table>
+    <thead>
+    <tr>
+    <!-- Use the extracted column names as table headers -->
+    <th v-for="(columnName, index) in extractColumnNames(searchResults)" :key="index">
+    {{ columnName }}
+    </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="(result, rowIndex) in searchResults" :key="rowIndex">
+    <td v-for="(column, index) in result" :key="index">
+    {{ column }}
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </template>
+*@
+@*
+    <template id="list-template">
+    <div id="app">
+    <h1>Search Page</h1>
+    <div class="search-options">
+    <button v-on:click="showCompanyInputs()" class="button-search"> Search Company</button>
+    <button v-on:click="showAddressInputs()" class="button-search">Search Address</button>
+    <button v-on:click="showCountryInputs()" class="button-search">Search Country</button>
+
+    <router-link to="/Read" tag="button"class="button-back">Go back to data</router-link>
+
+    </div>
+
+
+    <!-- Company Search -->
+    <div v-if="showingCompanies" class="search-section">
+    <h2>Search Company</h2>
+    <div class="input-group">
+    <label for="companyName">Company Name:</label>
+    <input type="text" id="companyName" v-model="companyCriteria.companyName" required>
+    </div>
+    <div class="input-group">
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" v-model="companyCriteria.phoneNumber" required>
+    </div>
+    <div class="button-group">
+    <button v-on:click="searchCompany()" aria-label="Search Company">Search Company</button>
+    </div>
+    </div>
+
+    <!-- Address Search -->
+    <div v-else-if="showingAddresses" class="search-section">
+    <h2>Search Address</h2>
+    <div class="input-group">
+    <!-- Address inputs - Column 1 -->
+    <div class="input-column">
+    <!-- Address inputs - Column 1 -->
+    <label for="streetAddress1">Street Address 1:</label>
+    <input type="text" id="streetAddress1" v-model="addressCriteria.streetAddress1" required>
+    <br>
+    <label for="streetAddress2">Street Address 2:</label>
+    <input type="text" id="streetAddress2" v-model="addressCriteria.streetAddress2" required>
+    <br>
+    <label for="region">Region:</label>
+    <input type="text" id="region" v-model="addressCriteria.region">
+    <br>
+    <label for="postCode">PostCode:</label>
+    <input type="text" id="postCode" v-model="addressCriteria.postCode" required>
+    </div>
+
+    <div class="input-column">
+    <!-- Address inputs - Column 2 -->
+    <label for="companyId">Company Id:</label>
+    <input type="text" id="companyId" v-model="addressCriteria.companyId" required>
+    <br>
+    <label for="companyName">Company Name:</label>
+    <input type="text" id="companyName" v-model="addressCriteria.Company.companyName" required>
+    <br />
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" v-model="addressCriteria.Company.phoneNumber" required>
+    </div>
+
+    <div class="input-column">
+    <!-- Address inputs - Column 3 -->
+    <label for="countryId">Country Id:</label>
+    <input type="text" id="countryId" v-model="addressCriteria.countryId" required>
+    <br>
+    <label for="countryName">Country Name:</label>
+    <input type="text" id="countryName" v-model="addressCriteria.Country.countryName" required>
+    </div>
+    </div>
+    <!-- Add additional address input columns... -->
+    <div class="button-group">
+    <button v-on:click="searchAddress()" aria-label="Search Address">Search Address</button>
+    </div>
+    </div>
+
+    <!-- Country Search -->
+    <div v-else-if="showingCountries" class="search-section">
+    <h2>Search Country</h2>
+    <div class="input-group">
+    <label for="countryName">Country Name:</label>
+    <input type="text" id="countryName" v-model="countryCriteria.countryName" required>
+    </div>
+    <div class="button-group">
+    <button v-on:click="searchCountry()" aria-label="Search Country">Search Country</button>
+    </div>
+    </div>
+
+    <!-- Search Results -->
+    <div id="search-results" class="search-results">
+    <h2>Search Results</h2>
+    <table>
+    <thead>
+    <tr>
+    <!-- Use the extracted column names as table headers -->
+    <th v-for="(columnName, index) in extractColumnNames(searchResults)" :key="index">
+    {{ columnName }}
+    </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="(result, rowIndex) in searchResults" :key="rowIndex">
+    <td v-for="(column, index) in result" :key="index">
+    {{ column }}
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </template>
+*@

@@ -1,0 +1,12 @@
+﻿<template id="attribute-input-form-component">
+    <div class="attribute-input-form form-group">
+        <div class="input-container">
+            <label :for="inputId">{{ label }}</label>
+            <input :id="inputId"
+                   :type="inputType"
+                   v-model="inputValue"
+                   :placeholder="placeholder"
+                   class="form-control" />
+        </div>
+    </div>
+</template>

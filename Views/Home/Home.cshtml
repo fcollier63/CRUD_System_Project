@@ -1,0 +1,16 @@
+﻿
+<template id="home-template">
+    <div class="home">
+        <div class="row">
+            <div class="home-content">
+                <h1>Welcome to the website</h1>
+                <p>Explore data and services</p>
+                <router-link to="/Read" tag="button" class="button-basic">View Data</router-link>
+            </div>
+        </div>
+        <div class="row">
+            <attribute-input-form label="Username" :variable="username" placeholder="Enter your username" input-type="text" v-model="username"></attribute-input-form>
+            <attribute-input-form label="Password" :variable="password" placeholder="Enter your password" input-type="password" v-model="password"></attribute-input-form>
+        </div>
+    </div>
+</template>

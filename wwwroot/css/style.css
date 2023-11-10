@@ -1,0 +1,332 @@
+﻿html {
+  scroll-behavior: smooth;
+}
+
+.home {
+  display: flex;
+  flex-direction: column; /* Updated to column layout */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+.home .home-content {
+  text-align: center;
+}
+.home .home-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+.home .home-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+.home .home-content .button-basic {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.home .home-content .button-basic:hover {
+  background-color: #0056b3;
+}
+
+.attribute-input-form {
+  margin-bottom: 10px; /* Adjust the margin size as needed */
+}
+
+/* Add this to your CSS stylesheet */
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/*.input-label {
+    font-weight: bold;
+    margin-bottom: 3px;
+    font-size: 14px;
+    color: #333;*/ /* Text color */
+/*}
+
+.input-field {
+    padding: 8px;
+    border: 1px solid #ccc;*/ /* Border color */
+/*border-radius: 4px;
+font-size: 16px;
+color: #333;*/ /* Text color */
+/*}*/
+/* Apply additional styles as needed */
+.custom-tab {
+  color: #007BFF;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: #f0f0f0 0.3s;
+}
+.custom-tab:hover {
+  background-color: #f0f0f0;
+}
+
+.custom-tab.active {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.center-action {
+  text-align: center;
+}
+
+.table td {
+  vertical-align: middle;
+  text-align: left;
+}
+
+.center-action button {
+  display: block;
+  margin: 0 auto;
+}
+
+.table-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.fixed-table-head {
+  top: 0;
+  position: sticky;
+  background-color: #333;
+  color: white;
+}
+
+.spacer {
+  margin-right: 20px; /* Adjust the margin to control the space between items */
+}
+
+/*.button-basic {
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: darkorange;
+    transition: background-color 0.3s;
+    color: white;
+
+    &:hover {
+        background-color: #333;
+    }
+}*/
+/*
+.button-add {
+    background-color: green;
+
+    @extend .button-basic;
+    z-index: 999;
+    margin-right: 15px
+}
+
+.button-search-page {
+    @extend .button-basic;
+    background-color: blue;
+    z-index: 998;
+}
+
+.button-back {
+    @extend .button-basic;
+    background-color: #FF0000;
+
+    }
+
+.button-delete {
+    background-color: red;
+}
+
+.button-edit {
+    @extend .button-basic;
+    padding: 5px 10px;
+    background-color: lightblue;
+    margin: 0 auto;  
+    display: inline-block;
+}
+    .button-search {
+    @extend .button-basic;
+    background-color: blue;
+}
+
+.button-show {
+    @extend .button-basic;
+    background-color: yellow;
+    border-color: yellow;
+    color: black
+}*/
+/*td {
+    padding: 0 5px 0;
+
+
+    border-right: none;
+}
+
+
+/*}
+    .page-content {
+    position: relative;*/ /* Set the positioning context for the child elements 
+
+.table-content {
+    position: relative;*/
+/* Other styles for your table content here */
+/*}
+
+h1{
+    margin-top:7%
+}
+
+
+
+
+
+.button-container {
+    position: sticky
+}
+
+
+.button-basic {
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: darkorange;
+    transition: background-color 0.3s;
+    color: white;
+
+    &:hover {
+        background-color: #333;
+    }
+}
+.button-add {
+    background-color: green;
+
+    @extend .button-basic;
+    z-index: 999;
+    margin-right: 15px
+}
+.button-search-page {
+    @extend .button-basic;
+    background-color: blue;
+    z-index: 998;
+}
+.button-back {
+    @extend .button-basic;
+    background-color: #FF0000;*/ /* Change to the desired background color */
+/* Add any other styles you want */
+/*}
+
+.button-delete {
+    background-color: red;
+}
+
+.button-edit {
+    @extend .button-basic;
+    padding: 5px 10px;
+    background-color: lightblue;
+    margin: 0 auto;*/ /* Center the button horizontally */
+/*display: inline-block;
+}*/
+/* Adjust the z-index value as needed to ensure the button appears above other content */
+/*.button-search {
+    @extend .button-basic;
+    background-color: blue;
+}
+
+.button-show {
+    @extend .button-basic;
+    background-color: yellow;
+    border-color: yellow;
+    color: black
+}
+
+
+.fixed-header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;*/ /* Set the background color as needed */
+/*z-index: 1000;
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+    //padding: 10px;
+}
+.btn-group-header-nav {
+    background-color: white;
+    margin-left: 20px;
+}
+
+.btn-group-header-show {
+    display: flex;
+    width: 50%;
+    background-color: white;
+    margin-left: 20px;
+
+    .active {
+        background-color: #333;
+        border-color: #333;*/
+/* Change to the desired color for the active button */
+/*color: #fff;*/ /* Change to the desired text color for the active button */
+/* Add any other styles for the active button */
+/*}
+}
+
+.table-content {
+    max-height: 500px;
+    overflow-y: auto;
+    position: relative;
+
+}*/
+/*
+table {
+  align-items: center;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+th {
+  padding: 10px 10px 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+  border-right: none;
+  border-top: 1px solid #333;
+}
+
+td {
+  padding: 5px 0 5px 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+  border-right: none;
+}
+
+.center-action {
+  vertical-align: middle;
+}
+
+.fixed-table-head {
+  top: 0;
+  position: sticky;
+  background-color: #333;
+  color: white;
+}
+
+tbody tr {
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  &:hover {
+    background-color: #ccc;
+  }
+}*/

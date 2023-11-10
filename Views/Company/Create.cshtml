@@ -1,0 +1,76 @@
+﻿<template id="create-template">
+    <div class="container">
+        <h1 class="mt-5">Create a New {{ tab === 'Company' ? 'Company' : tab === 'Address' ? 'Address' : 'Country' }}</h1>
+        <div class="fixed-header d-flex justify-content-between align-items-center mt-4">
+            <div class="btn-group-header-show">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link custom-tab" :class="{ active: tab === 'Company' }" v-on:click="showForm('Company')">
+                            Companies
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link custom-tab" :class="{ active: tab === 'Address' }" v-on:click="showForm('Address')">
+                            Addresses   
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link custom-tab" :class="{ active: tab === 'Country' }" v-on:click="showForm('Country')">
+                            Countries
+                        </a>
+                    </li>
+                    <p class="spacer"></p>
+                    @*<router-link to="/Read" tag="button" class="btn btn-secondary mt-0">Back to List</router-link>*@
+                    <button v-on:click="pathReturn()" class="btn btn-bg-secondary mt-0">Back to Data</button>
+
+                </ul>
+            </div>
+        </div>
+
+        <!-- Form for creating a Company -->
+        <div v-if="tab === 'Company'" class="mt-4">
+
+            <!-- company -->
+            <label for="companyName">Company Name:</label>
+            <input type="text" id="companyName" v-model="newCompany.companyName" class="form-control" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" v-model="newCompany.phoneNumber" class="form-control" required>
+            <button v-on:click="createCompany()" class="btn btn-success mt-3">Create Company</button>
+        </div>
+
+
+        <!-- Form for creating an Address -->
+        <div v-if="tab === 'Address'" class="mt-4">
+            <!-- address -->
+            <label for="streetAddress1">Street Address 1:</label>
+            <input type="text" id="streetAddress1" v-model="newAddress.streetAddress1" class="form-control" required>
+
+            <label for="streetAddress2">Street Address 2:</label>
+            <input type="text" id="streetAddress2" v-model="newAddress.streetAddress2" class="form-control" required>
+
+            <label for="region">Region:</label>
+            <input type="text" id="region" v-model="newAddress.region" class="form-control">
+
+            <label for="postCode">PostCode:</label>
+            <input type="text" id="postCode" v-model="newAddress.postCode" class="form-control" required>
+
+            <label for="countryId">Country Id:</label>
+            <input type="text" id="countryId" v-model="newAddress.countryId" class="form-control" required>
+
+            <label for="companyId">Company Id:</label>
+            <input type="text" id="companyId" v-model="newAddress.companyId" class="form-control" required>
+
+            <button v-on:click="createAddress()" class="btn btn-success mt-3">Create Address</button>
+        </div>
+
+        <!-- Form for creating a Country -->
+        <div v-if="tab === 'Country'" class="mt-4">
+            <!-- country -->
+            <label for="countryName">Country Name:</label>
+            <input type="text" id="countryName" v-model="newCountry.countryName" class="form-control" required>
+
+            <button v-on:click="createCountry()" class="btn btn-success mt-3">Create Country</button>
+        </div>
+    </div>
+</template>

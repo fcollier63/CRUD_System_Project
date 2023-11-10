@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div id="app">
+    
+  <router-view></router-view>
+</div>
+
+@await Html.PartialAsync("/Views/Components/companyAttributeInput.cshtml")
+
+@await Html.PartialAsync("/Views/Home/Home.cshtml")
+@await Html.PartialAsync("/Views/Company/Read.cshtml")
+@await Html.PartialAsync("/Views/Company/Create.cshtml")
+@await Html.PartialAsync("/Views/Company/EditDelete.cshtml")
+@await Html.PartialAsync("/Views/Company/EditDelete.cshtml")
+@await Html.PartialAsync("/Views/Company/List.cshtml")
