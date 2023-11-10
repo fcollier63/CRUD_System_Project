@@ -1,0 +1,22 @@
+[
+  {
+    "outputFileName": "wwwroot/js/bundle.js",
+    "inputFiles": [
+      "wwwroot/js/Vue/vue.js",
+      "wwwroot/js/Vue/vue-resource.js",
+      "wwwroot/js/Vue/vue-router.js",
+      "wwwroot/js/axios/axios.min.js",
+      "wwwroot/js/Components/*.js",
+
+      "wwwroot/js/Routes/*.js",
+
+      "wwwroot/js/routeConfig.js",
+      "wwwroot/js/site.js"
+    ],
+    "minify": {
+      "enabled": false,
+      "renameLocals": true
+    }
+  }
+ 
+]
